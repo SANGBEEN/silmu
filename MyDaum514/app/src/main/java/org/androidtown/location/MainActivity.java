@@ -631,16 +631,19 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         int id = item.getItemId();
 
 
+
+
         switch (id) {
             case R.id.action_settings: {
                 createDefaultMarker(mapView);
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
-            };
+            }
+            case R.id.action_settings2:{
+
+            }
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle("현재위치");
-                //dialog.show();
             return true;
         }
         return onOptionsItemSelected(item);
