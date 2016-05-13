@@ -30,6 +30,7 @@ public class Mainscreen extends AppCompatActivity {
         Intent intent = new Intent(getApplication(),MainActivity.class);
         startActivity(intent);
 
+
     }
 
     public void onMain1Clicked(View v){

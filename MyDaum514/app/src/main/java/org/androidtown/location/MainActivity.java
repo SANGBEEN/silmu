@@ -1,19 +1,15 @@
 package org.androidtown.location;
+
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -72,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     StringBuffer result2;
     StringBuffer result3;
 
+
     //NOTIFICATION설정
 
     /**
@@ -128,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
 
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -138,11 +136,14 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         RelativeLayout container = (RelativeLayout) findViewById(R.id.map_view);
         container.addView(mapView);
 
+
         mapView.setCurrentLocationEventListener(this);  //트래킹모드를 위한 이벤트 리스너
         mapView.setZoomLevel(2, true);                  //줌레벨설정
 
         mapView.setMapViewEventListener(this);
         mapView.setPOIItemEventListener(this);
+
+
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -441,30 +442,14 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
     public void onbutton1Clicked(View v) {
+        createDefaultMarker(mapView);
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
-    }
-
-    public void onButton2Clicked(View v) {
-
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        long minTime = 10000;
-        float minDistance = 0;
-
-        //  MyLocationListener listener = new MyLocationListener();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-
-        }
-        MyLocationListener listener = new MyLocationListener();
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, listener);
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, listener);
-
 
     }
+
+
 
 
     @Override
@@ -474,6 +459,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
+
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "Main Page", // TODO: Define a title for the content shown.
@@ -616,7 +602,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         result3.append(",");
         result3.append(log3);
         result3.append("&by=CAR");
-        
+
         /*AlertDialog.Builder dialog1 = new AlertDialog.Builder(this);
         dialog1.setItems(defaultMarker1.getCustomImageResourceId(), new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which) {
@@ -635,108 +621,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
     }
 
-    public void onButton3Clicked(View v) {
-
-        createDefaultMarker(mapView);
 
 
 
-     /*
-        defaultMarker1 = new MapPOIItem();
-        defaultMarker2 = new MapPOIItem();
-        defaultMarker3 = new MapPOIItem();
-
-        defaultMarker1.setTag(0);
-        defaultMarker2.setTag(0);
-        defaultMarker3.setTag(0);
-
-        defaultMarker1.setMapPoint(DEFAULT_MARKER_POINT1);
-        defaultMarker2.setMapPoint(DEFAULT_MARKER_POINT2);
-        defaultMarker3.setMapPoint(DEFAULT_MARKER_POINT3);
-
-        defaultMarker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        defaultMarker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        defaultMarker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
-
-        defaultMarker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        defaultMarker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        defaultMarker3.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-
-        mapView.addPOIItem(defaultMarker1);
-        mapView.addPOIItem(defaultMarker2);
-        mapView.addPOIItem(defaultMarker3);
-
-        mapView.selectPOIItem(defaultMarker1, true);
-        mapView.selectPOIItem(defaultMarker2, true);
-        mapView.selectPOIItem(defaultMarker3, true);*/
-    }
-
-    public void onButton4Clicked(View v) {
-        /*Uri uri = Uri.parse(result1.toString());
-        Intent intent = new Intent();
-        intent.setAction(intent.ACTION_VIEW);
-        intent.setData(uri);
-        startActivity(intent);
-*/
-
-        String[] mapMoveMenuItems = {
-                "Marker1",
-                "Marker2",
-                "Marker3"
-        };
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("범위지정");
-        dialog.setItems(mapMoveMenuItems, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0: // User Location On
-                    {
-
-
-                        Uri uri = Uri.parse(result1.toString());
-                        Intent intent = new Intent();
-                        intent.setAction(intent.ACTION_VIEW);
-                        intent.setData(uri);
-                        startActivity(intent);
-
-                        ;
-                    }
-                    break;
-                    case 1: // User Location On, MapMoving Off
-                    {
-                        Uri uri = Uri.parse(result2.toString());
-                        Intent intent = new Intent();
-                        intent.setAction(intent.ACTION_VIEW);
-                        intent.setData(uri);
-                        startActivity(intent);
-
-                        ;
-                        ;
-                    }
-                    break;
-                    case 2: // User Location+Heading On
-                    {
-                        Uri uri = Uri.parse(result3.toString());
-                        Intent intent = new Intent();
-                        intent.setAction(intent.ACTION_VIEW);
-                        intent.setData(uri);
-                        startActivity(intent);
-
-                        ;
-                        ;
-                    }
-                    break;
-
-
-                }
-            }
-
-        });
-        dialog.show();
-
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -757,12 +644,12 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         switch (id) {
             case R.id.action_settings: {
                 String[] mapMoveMenuItems = {
+                        "200m",
                         "500m",
-                        "1km",
-                        "2km"
+                        "1km"
                 };
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("범위지정");
+                dialog.setTitle("현재위치");
                 dialog.setItems(mapMoveMenuItems, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -770,10 +657,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                             case 0: // User Location On
                             {
 
-
+                                mapView.removeAllCircles();
                                 MapCircle circle1 = new MapCircle(
                                         MapPoint.mapPointWithGeoCoord(la, lo), // center
-                                        500, // radius
+                                        200, // radius
                                         Color.argb(128, 255, 0, 0), // strokeColor
                                         Color.argb(128, 0, 255, 0) // fillColor
                                 );
@@ -785,9 +672,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                             break;
                             case 1: // User Location On, MapMoving Off
                             {
+                                mapView.removeAllCircles();
                                 MapCircle circle1 = new MapCircle(
                                         MapPoint.mapPointWithGeoCoord(la, lo), // center
-                                        1000, // radius
+                                        500, // radius
                                         Color.argb(128, 255, 0, 0), // strokeColor
                                         Color.argb(128, 0, 255, 0) // fillColor
                                 );
@@ -800,9 +688,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                             break;
                             case 2: // User Location+Heading On
                             {
+                                mapView.removeAllCircles();
                                 MapCircle circle1 = new MapCircle(
                                         MapPoint.mapPointWithGeoCoord(la, lo), // center
-                                        2000, // radius
+                                        1000, // radius
                                         Color.argb(128, 255, 0, 0), // strokeColor
                                         Color.argb(128, 0, 255, 0) // fillColor
                                 );
