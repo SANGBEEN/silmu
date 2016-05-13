@@ -953,6 +953,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
        protected void onPostExecute(String str){
 
          cap[i++]=str;
+           /*cap이 아니라 새로운 스트링정의후 jsom을 받는다.
+            int 형 한개 double형 2개 배열선언후
+            파싱하여 각각 배열에 저장한다.
+           */
        }
 
 
