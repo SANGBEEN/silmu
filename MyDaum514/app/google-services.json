@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "870821343801",
+    "project_id": "gcmgcm-7b3cb"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870821343801:android:549b4d1b83708da0",
+        "android_client_info": {
+          "package_name": "org.androidtown.location"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaw0CyX5WhdaWYU-N740OhzKOMZhmJox4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

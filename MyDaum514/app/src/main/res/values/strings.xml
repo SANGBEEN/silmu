@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">trashcan management</string>
+    <string name="action_settings">범위지정</string>
+</resources>
