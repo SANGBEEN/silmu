@@ -17,25 +17,6 @@
 
     </RelativeLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="현재위치"
-        android:id="@+id/button"
-        android:onClick="onbutton1Clicked"
-        android:longClickable="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="위치좌표"
-        android:id="@+id/textView"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="55dp" />
-
 
 </RelativeLayout>
 

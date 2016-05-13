@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.TextView;
 
 /**
  * Created by daehyun on 16. 2. 14..
@@ -24,9 +23,9 @@ public class notification_something extends Activity {
         else {
             id = extras.getInt("notificationId");
         }
-        TextView t = (TextView) findViewById(R.id.textView);
+        //TextView t = (TextView) findViewById(R.id.textView);
         s = s+" "+id;
-        t.setText(s);
+        //t.setText(s);
         NotificationManager nm =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(id);

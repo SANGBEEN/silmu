@@ -7,4 +7,5 @@
         android:orderInCategory="100"
         android:title="현재위치"
         app:showAsAction="never" />
+
 </menu>

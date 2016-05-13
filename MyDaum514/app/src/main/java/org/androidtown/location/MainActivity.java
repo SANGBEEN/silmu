@@ -2,7 +2,6 @@ package org.androidtown.location;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +24,6 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
-import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        textView = (TextView) findViewById(R.id.textView);
+
         //맵뷰생성
         mapView = new MapView(this);
         mapView.setDaumMapApiKey("628faa3102922f3999d2a1f7352d4065");
@@ -441,13 +438,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     }
 
 
-    public void onbutton1Clicked(View v) {
-        createDefaultMarker(mapView);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
-
-
-    }
 
 
 
@@ -500,8 +491,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
             Double longitude = location.getLongitude();
             la = latitude;
             lo = longitude;
-            textView.setText("gps: " + latitude + " " + longitude);
-            textView.invalidate();
+
 
         }
 
@@ -643,81 +633,17 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
         switch (id) {
             case R.id.action_settings: {
-                String[] mapMoveMenuItems = {
-                        "200m",
-                        "500m",
-                        "1km"
-                };
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("현재위치");
-                dialog.setItems(mapMoveMenuItems, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: // User Location On
-                            {
-
-                                mapView.removeAllCircles();
-                                MapCircle circle1 = new MapCircle(
-                                        MapPoint.mapPointWithGeoCoord(la, lo), // center
-                                        200, // radius
-                                        Color.argb(128, 255, 0, 0), // strokeColor
-                                        Color.argb(128, 0, 255, 0) // fillColor
-                                );
-                                circle1.setTag(1234);
-                                mapView.addCircle(circle1);
-
-                                ;
-                            }
-                            break;
-                            case 1: // User Location On, MapMoving Off
-                            {
-                                mapView.removeAllCircles();
-                                MapCircle circle1 = new MapCircle(
-                                        MapPoint.mapPointWithGeoCoord(la, lo), // center
-                                        500, // radius
-                                        Color.argb(128, 255, 0, 0), // strokeColor
-                                        Color.argb(128, 0, 255, 0) // fillColor
-                                );
-                                circle1.setTag(1234);
-                                mapView.addCircle(circle1);
-
-                                ;
-                                ;
-                            }
-                            break;
-                            case 2: // User Location+Heading On
-                            {
-                                mapView.removeAllCircles();
-                                MapCircle circle1 = new MapCircle(
-                                        MapPoint.mapPointWithGeoCoord(la, lo), // center
-                                        1000, // radius
-                                        Color.argb(128, 255, 0, 0), // strokeColor
-                                        Color.argb(128, 0, 255, 0) // fillColor
-                                );
-                                circle1.setTag(1234);
-                                mapView.addCircle(circle1);
-
-                                ;
-                                ;
-                            }
-                            break;
+                createDefaultMarker(mapView);
+                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
-                        }
-                    }
-
-                });
-                dialog.show();
-                return true;
-            }
-        }
-        //noinspection SimplifiableIfStatement
-      /*  if (id == R.id.action_settings) {
+            };
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("현재위치");
+                //dialog.show();
             return true;
-        }*/
-
-        return super.onOptionsItemSelected(item);
+        }
+        return onOptionsItemSelected(item);
     }
 
     @Override
