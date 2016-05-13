@@ -31,6 +31,10 @@ import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,7 +84,15 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     phpDown task;
     phpDown task2;
     phpDown task3;
-   String cap[] = new  String[3];
+    String cap[] = new  String[3];
+    String aaa[] = new String[3];
+
+    //int형 ouble형 어레이리스트 3개만들어서 각각 저장? 배열
+
+
+
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,13 +126,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         task2.execute("http://192.168.0.22//putdata2.php");
         task3.execute("http://192.168.0.22//putdata3.php");
 
-
         Noti.Notify(getApplication());
 
-
-
-
-
+        doJSONParser();
 
 
         setContentView(R.layout.activity_main);
@@ -443,6 +451,21 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
 
+    void doJSONParser(){
+        StringBuffer sb = new StringBuffer();
+        try {
+            JSONArray jarray = new JSONArray(cap[0]);   // JSONArray 생성
+            for(int i=0; i < jarray.length(); i++){
+                JSONObject jObject = jarray.getJSONObject(i);  // JSONObject 추출
+                int capacity = jObject.getInt("용량");
+
+                sb.append("용량:" + capacity + "\n");
+            }
+           aaa[0]=sb.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -529,7 +552,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         defaultMarker2 = new MapPOIItem();
         defaultMarker3 = new MapPOIItem();
 
-        defaultMarker1.setItemName(cap[0]);
+        defaultMarker1.setItemName(aaa[0]);
         defaultMarker2.setItemName(cap[1]);
         defaultMarker3.setItemName(cap[2]);
 
