@@ -31,6 +31,10 @@ import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     StringBuffer result1;
     StringBuffer result2;
     StringBuffer result3;
+
+    double capacity;
+    String jSon;
 
 
     //NOTIFICATION설정
@@ -108,11 +115,12 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
         task = new phpDown();
-        task2 = new phpDown();
-        task3 = new phpDown();
+        //task2 = new phpDown();
+       // task3 = new phpDown();
         task.execute("http://172.30.1.39//putdata.php");
-        task2.execute("http://172.30.1.39//putdata2.php");
-        task3.execute("http://172.30.1.39//putdata3.php");
+       // doJSONParser();
+        //task2.execute("http://172.30.1.39//putdata2.php");
+       // task3.execute("http://172.30.1.39//putdata3.php");
 
 
         Noti.Notify(getApplication());
@@ -436,6 +444,23 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
     }
+ 
+    public void doJSONParser(){
+        try {
+
+            JSONObject jObject = new JSONObject(jSon);
+            JSONArray jarray = jObject.getJSONArray("capacity");
+            capacity = jarray.getDouble(0);
+            JSONArray jarray2 = jObject.getJSONArray("lat");
+            JSONArray jarray3 = jObject.getJSONArray("lg");
+            la = jarray2.getDouble(0);
+            lo = jarray3.getDouble(0);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -529,9 +554,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         defaultMarker2 = new MapPOIItem();
         defaultMarker3 = new MapPOIItem();
 
-        defaultMarker1.setItemName(cap[0]);
-        defaultMarker2.setItemName(cap[1]);
-        defaultMarker3.setItemName(cap[2]);
+        defaultMarker1.setItemName(String.valueOf(capacity));
+        defaultMarker2.setItemName(String.valueOf(capacity));
+        defaultMarker3.setItemName(String.valueOf(capacity));
 
 
         defaultMarker1.setTag(1);
@@ -635,8 +660,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
         switch (id) {
             case R.id.action_settings: {
+                //doJSONParser();
                 createDefaultMarker(mapView);
-                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
             }
@@ -928,8 +954,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         }
 
        protected void onPostExecute(String str){
-
-         cap[i++]=str;
+           jSon=str;
+           doJSONParser();
+         //cap[i++]=str;
        }
 
 
