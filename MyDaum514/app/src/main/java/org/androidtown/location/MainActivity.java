@@ -46,17 +46,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapReverseGeoCoder.ReverseGeoCodingResultListener, MapView.POIItemEventListener, MapView.MapViewEventListener {
     TextView textView;
     MapView mapView;
-  int i=0;
-    static final MapPoint DEFAULT_MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(37.3746477, 126.6328374);
-    static final MapPoint DEFAULT_MARKER_POINT2 = MapPoint.mapPointWithGeoCoord(37.3744577, 126.6318174);
-    static final MapPoint DEFAULT_MARKER_POINT3 = MapPoint.mapPointWithGeoCoord(37.3743677, 126.6358274);
+  int i=0,j=0,k=0,z=0;
+    MapPoint[] DEFAULT_MARKER_POINT=new MapPoint[10];
+    double[] capacity = new double[10];
+    double[] la1 =  new double[10];
+    double[] lo1 = new double[10];
 
     MapPOIItem defaultMarker1;
     MapPOIItem defaultMarker2;
     MapPOIItem defaultMarker3;
-
-    Double latitude;
-    Double longitude;
     double la;
     double lo;
     double lat1;
@@ -69,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     StringBuffer result2;
     StringBuffer result3;
 
-    double capacity;
+
+
     String jSon;
 
 
@@ -115,12 +114,12 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
         task = new phpDown();
-        //task2 = new phpDown();
-       // task3 = new phpDown();
+        task2 = new phpDown();
+        task3 = new phpDown();
         task.execute("http://172.30.1.39//putdata.php");
-       // doJSONParser();
-        //task2.execute("http://172.30.1.39//putdata2.php");
-       // task3.execute("http://172.30.1.39//putdata3.php");
+        //doJSONParser();
+        task2.execute("http://172.30.1.39//putdata2.php");
+        task3.execute("http://172.30.1.39//putdata3.php");
 
 
         Noti.Notify(getApplication());
@@ -444,18 +443,19 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
     }
- 
+
     public void doJSONParser(){
         try {
 
             JSONObject jObject = new JSONObject(jSon);
-            JSONArray jarray = jObject.getJSONArray("capacity");
-            capacity = jarray.getDouble(0);
-            JSONArray jarray2 = jObject.getJSONArray("lat");
-            JSONArray jarray3 = jObject.getJSONArray("lg");
-            la = jarray2.getDouble(0);
-            lo = jarray3.getDouble(0);
 
+            JSONArray jarray = jObject.getJSONArray("capacity");
+            capacity[i++] = jarray.getDouble(0);
+            JSONArray jarray2 = jObject.getJSONArray("la");
+            la1[j++] = jarray2.getDouble(0);
+            JSONArray jarray3 = jObject.getJSONArray("lg");
+            lo1[k++] = jarray3.getDouble(0);
+            DEFAULT_MARKER_POINT[z++]=MapPoint.mapPointWithGeoCoord(la1[j-1],lo1[k-1]);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -550,29 +550,32 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         textView.setText("마킹");
         textView.invalidate();
        // mapView.setMapCenterPoint(DEFAULT_MARKER_POINT1, false);*/
+
+
+
         defaultMarker1 = new MapPOIItem();
         defaultMarker2 = new MapPOIItem();
         defaultMarker3 = new MapPOIItem();
 
-        defaultMarker1.setItemName(String.valueOf(capacity));
-        defaultMarker2.setItemName(String.valueOf(capacity));
-        defaultMarker3.setItemName(String.valueOf(capacity));
+        defaultMarker1.setItemName("용량"+String.valueOf(capacity[0])+"%");
+        defaultMarker2.setItemName("용량"+String.valueOf(capacity[1])+"%");
+        defaultMarker3.setItemName("용량"+String.valueOf(capacity[2])+"%");
 
 
         defaultMarker1.setTag(1);
         defaultMarker2.setTag(1);
         defaultMarker3.setTag(1);
 
-        defaultMarker1.setMapPoint(DEFAULT_MARKER_POINT1);
-        defaultMarker2.setMapPoint(DEFAULT_MARKER_POINT2);
-        defaultMarker3.setMapPoint(DEFAULT_MARKER_POINT3);
+        defaultMarker1.setMapPoint(DEFAULT_MARKER_POINT[0]);
+        defaultMarker2.setMapPoint(DEFAULT_MARKER_POINT[1]);
+        defaultMarker3.setMapPoint(DEFAULT_MARKER_POINT[2]);
 
         defaultMarker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
         defaultMarker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
         defaultMarker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
 
         defaultMarker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        defaultMarker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+       defaultMarker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
         defaultMarker3.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 
         mapView.addPOIItem(defaultMarker1);
@@ -582,8 +585,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         mapView.selectPOIItem(defaultMarker1, true);
         mapView.selectPOIItem(defaultMarker2, true);
         mapView.selectPOIItem(defaultMarker3, true);
+
         //거리측정
-        MapPoint.mapPointWithGeoCoord(la, lo);
+        //MapPoint.mapPointWithGeoCoord(la, lo);
         lat1 = defaultMarker1.getMapPoint().getMapPointGeoCoord().latitude;
         log1 = defaultMarker1.getMapPoint().getMapPointGeoCoord().longitude;
         result1 = new StringBuffer("daummaps://route?sp=");
@@ -617,8 +621,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         result3.append(",");
         result3.append(log3);
         result3.append("&by=CAR");
-
-        /*AlertDialog.Builder dialog1 = new AlertDialog.Builder(this);
+/*
+        AlertDialog.Builder dialog1 = new AlertDialog.Builder(this);
         dialog1.setItems(defaultMarker1.getCustomImageResourceId(), new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which) {
                 Uri uri = Uri.parse(result1.toString());
@@ -660,7 +664,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
         switch (id) {
             case R.id.action_settings: {
-                //doJSONParser();
+
                 createDefaultMarker(mapView);
                 //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
@@ -956,7 +960,6 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
        protected void onPostExecute(String str){
            jSon=str;
            doJSONParser();
-         //cap[i++]=str;
        }
 
 
