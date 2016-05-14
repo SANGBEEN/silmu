@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         task = new phpDown();
         task2 = new phpDown();
         task3 = new phpDown();
-        task.execute("http://192.168.0.22//putdata.php");
-        task2.execute("http://192.168.0.22//putdata2.php");
-        task3.execute("http://192.168.0.22//putdata3.php");
+        task.execute("http://172.30.1.39//putdata.php");
+        task2.execute("http://172.30.1.39//putdata2.php");
+        task3.execute("http://172.30.1.39//putdata3.php");
 
 
         Noti.Notify(getApplication());
