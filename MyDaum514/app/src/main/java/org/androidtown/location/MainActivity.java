@@ -47,14 +47,14 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     TextView textView;
     MapView mapView;
   int i=0,j=0,k=0,z=0;
-    MapPoint[] DEFAULT_MARKER_POINT=new MapPoint[10];
+    MapPoint[] MARKER_POINT=new MapPoint[10];
     double[] capacity = new double[10];
     double[] la1 =  new double[10];
     double[] lo1 = new double[10];
 
-    MapPOIItem defaultMarker1;
-    MapPOIItem defaultMarker2;
-    MapPOIItem defaultMarker3;
+    MapPOIItem Marker1;
+    MapPOIItem Marker2;
+    MapPOIItem Marker3;
     double la;
     double lo;
     double lat1;
@@ -116,10 +116,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         task = new phpDown();
         task2 = new phpDown();
         task3 = new phpDown();
-        task.execute("http://172.30.1.39//putdata.php");
+        task.execute("http://192.168.0.22//putdata.php");
         //doJSONParser();
-        task2.execute("http://172.30.1.39//putdata2.php");
-        task3.execute("http://172.30.1.39//putdata3.php");
+        task2.execute("http://192.168.0.22//putdata2.php");
+        task3.execute("http://192.168.0.22//putdata3.php");
 
 
         Noti.Notify(getApplication());
@@ -455,7 +455,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
             la1[j++] = jarray2.getDouble(0);
             JSONArray jarray3 = jObject.getJSONArray("lg");
             lo1[k++] = jarray3.getDouble(0);
-            DEFAULT_MARKER_POINT[z++]=MapPoint.mapPointWithGeoCoord(la1[j-1],lo1[k-1]);
+            MARKER_POINT[z++]=MapPoint.mapPointWithGeoCoord(la1[j-1],lo1[k-1]);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -553,43 +553,53 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
 
 
-        defaultMarker1 = new MapPOIItem();
-        defaultMarker2 = new MapPOIItem();
-        defaultMarker3 = new MapPOIItem();
+        Marker1 = new MapPOIItem();
+        Marker2 = new MapPOIItem();
+        Marker3 = new MapPOIItem();
 
-        defaultMarker1.setItemName("용량"+String.valueOf(capacity[0])+"%");
-        defaultMarker2.setItemName("용량"+String.valueOf(capacity[1])+"%");
-        defaultMarker3.setItemName("용량"+String.valueOf(capacity[2])+"%");
+        Marker1.setItemName("용량" + String.valueOf(capacity[0]) + "%");
+        Marker2.setItemName("용량" + String.valueOf(capacity[1]) + "%");
+        Marker3.setItemName("용량" + String.valueOf(capacity[2]) + "%");
 
 
-        defaultMarker1.setTag(1);
-        defaultMarker2.setTag(1);
-        defaultMarker3.setTag(1);
+        Marker1.setTag(1);
+        Marker2.setTag(1);
+        Marker3.setTag(1);
 
-        defaultMarker1.setMapPoint(DEFAULT_MARKER_POINT[0]);
-        defaultMarker2.setMapPoint(DEFAULT_MARKER_POINT[1]);
-        defaultMarker3.setMapPoint(DEFAULT_MARKER_POINT[2]);
+        Marker1.setMapPoint(MARKER_POINT[0]);
+        Marker2.setMapPoint(MARKER_POINT[1]);
+        Marker3.setMapPoint(MARKER_POINT[2]);
 
-        defaultMarker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        defaultMarker2.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        defaultMarker3.setMarkerType(MapPOIItem.MarkerType.BluePin);
 
-        defaultMarker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-       defaultMarker2.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        defaultMarker3.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        Marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        Marker2.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        Marker3.setMarkerType(MapPOIItem.MarkerType.CustomImage);
 
-        mapView.addPOIItem(defaultMarker1);
-        mapView.addPOIItem(defaultMarker2);
-        mapView.addPOIItem(defaultMarker3);
 
-        mapView.selectPOIItem(defaultMarker1, true);
-        mapView.selectPOIItem(defaultMarker2, true);
-        mapView.selectPOIItem(defaultMarker3, true);
+        Marker1.setCustomImageResourceId(R.drawable.custom_marker_black);
+        Marker2.setCustomImageResourceId(R.drawable.custom_marker_black);
+        Marker3.setCustomImageResourceId(R.drawable.custom_marker_black);
+
+        Marker1.setCustomImageAutoscale(true);
+        Marker2.setCustomImageAutoscale(true);
+        Marker3.setCustomImageAutoscale(true);
+
+        Marker1.setCustomImageAnchor(0.5f, 1.0f);
+        Marker2.setCustomImageAnchor(0.5f, 1.0f);
+        Marker3.setCustomImageAnchor(0.5f, 1.0f);
+
+        mapView.addPOIItem(Marker1);
+        mapView.addPOIItem(Marker2);
+        mapView.addPOIItem(Marker3);
+
+        mapView.selectPOIItem(Marker1, true);
+        mapView.selectPOIItem(Marker2, true);
+        mapView.selectPOIItem(Marker3, true);
 
         //거리측정
         //MapPoint.mapPointWithGeoCoord(la, lo);
-        lat1 = defaultMarker1.getMapPoint().getMapPointGeoCoord().latitude;
-        log1 = defaultMarker1.getMapPoint().getMapPointGeoCoord().longitude;
+        lat1 = Marker1.getMapPoint().getMapPointGeoCoord().latitude;
+        log1 = Marker1.getMapPoint().getMapPointGeoCoord().longitude;
         result1 = new StringBuffer("daummaps://route?sp=");
         result1.append(la);
         result1.append(",");
@@ -599,8 +609,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         result1.append(",");
         result1.append(log1);
         result1.append("&by=CAR");
-        lat2 = defaultMarker2.getMapPoint().getMapPointGeoCoord().latitude;
-        log2 = defaultMarker2.getMapPoint().getMapPointGeoCoord().longitude;
+        lat2 = Marker2.getMapPoint().getMapPointGeoCoord().latitude;
+        log2 = Marker2.getMapPoint().getMapPointGeoCoord().longitude;
         result2 = new StringBuffer("daummaps://route?sp=");
         result2.append(la);
         result2.append(",");
@@ -610,8 +620,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         result2.append(",");
         result2.append(log2);
         result2.append("&by=CAR");
-        lat3 = defaultMarker3.getMapPoint().getMapPointGeoCoord().latitude;
-        log3 = defaultMarker3.getMapPoint().getMapPointGeoCoord().longitude;
+        lat3 = Marker3.getMapPoint().getMapPointGeoCoord().latitude;
+        log3 = Marker3.getMapPoint().getMapPointGeoCoord().longitude;
         result3 = new StringBuffer("daummaps://route?sp=");
         result3.append(la);
         result3.append(",");
