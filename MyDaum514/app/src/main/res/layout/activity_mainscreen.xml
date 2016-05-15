@@ -11,47 +11,14 @@
     tools:context="org.androidtown.location.Mainscreen">
 
 
-    <android.support.design.widget.AppBarLayout
+
+
+    <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <ImageButton
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:background="@drawable/main1"
-        android:id="@+id/imageButton"
-        android:layout_marginTop="130dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="onMain1Clicked" />
-    <ImageButton
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:background="@drawable/main2"
-        android:layout_marginTop="130dp"
-        android:layout_marginLeft="190dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    <ImageButton
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:background="@drawable/main3"
+        android:layout_height="match_parent"
+        android:background="@drawable/mainscreen"
         android:onClick="onMain3Clicked"
-        android:layout_marginTop="300dp"
-        android:layout_marginLeft="100dp"
+
         android:layout_centerHorizontal="true" />
 
 

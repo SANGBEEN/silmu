@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">trashcan management</string>
+    <string name="app_name"> 쓰레기통 관리 시스템 </string>
     <string name="action_settings">범위지정</string>
 </resources>
