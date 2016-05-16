@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     double[] la1 =  new double[10];
     double[] lo1 = new double[10];
 
-    MapPOIItem Marker1;
-    MapPOIItem Marker2;
-
-    MapPOIItem Marker3;
     MapPOIItem[] Marker = new MapPOIItem[10];
 
     double la;
@@ -86,9 +82,14 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     private final String urlPath = "http://127.0.0.1/putdata.php";
     private final String TAG = "PHPTEST";
     Bitmap bmImg;
-    phpDown task;
+    //phpDown[] task=new phpDown[10];
+    phpDown task1;
     phpDown task2;
     phpDown task3;
+    phpDown task4;
+    phpDown task5;
+    phpDown task6;
+    phpDown task7;
    String cap[] = new  String[3];
 
 
@@ -116,13 +117,25 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                 .check();
 
 
-        task = new phpDown();
+
+        task1 = new phpDown();
         task2 = new phpDown();
         task3 = new phpDown();
-        task.execute("http://192.168.0.16//putdata.php");
+
+        task4 = new phpDown();
+        task5 = new phpDown();
+        task6 = new phpDown();
+        task7 = new phpDown();
+
+        task1.execute("http://192.168.0.16//putdata.php");
         //doJSONParser();
         task2.execute("http://192.168.0.16//putdata2.php");
         task3.execute("http://192.168.0.16//putdata3.php");
+
+        task4.execute("http://192.168.0.16//putdata4.php");
+        task5.execute("http://192.168.0.16//putdata5.php");
+        task6.execute("http://192.168.0.16//putdata6.php");
+        task7.execute("http://192.168.0.16//putdata7.php");
 
 
         Noti.Notify(getApplication());
@@ -541,123 +554,20 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     }
 
     public void createDefaultMarker(MapView mapView) {
-        /*defaultMarker1 = new MapPOIItem();
-        defaultMarker1.setItemName("Default Marker1");
-        defaultMarker1.setTag(0);
-        defaultMarker1.setMapPoint(DEFAULT_MARKER_POINT1);
-        defaultMarker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        defaultMarker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 
-        mapView.addPOIItem(defaultMarker1);
-        mapView.selectPOIItem(defaultMarker1, true);
-        textView.setText("마킹");
-        textView.invalidate();
-       // mapView.setMapCenterPoint(DEFAULT_MARKER_POINT1, false);*/
-
-
-/*
-        for(int i=0;i<Marker.length;i++){
+        for(int i=0;i< Marker.length;i++){
             Marker[i] = new MapPOIItem();
             Marker[i].setItemName("용량" + String.valueOf(capacity[i]) + "%");
             Marker[i].setTag(1);
             Marker[i].setMapPoint((MARKER_POINT[i]));
             Marker[i].setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            Marker[i].setCustomImageResourceId(R.drawable.custom_marker_black);
+            Marker[i].setCustomImageAutoscale(true);
+            Marker[i].setCustomImageAnchor(0.5f, 1.0f);
+            mapView.addPOIItem(Marker[i]);
+            mapView.selectPOIItem(Marker[i], true);
 
-        }*/
-        Marker1 = new MapPOIItem();
-        Marker2 = new MapPOIItem();
-        Marker3 = new MapPOIItem();
-
-        Marker1.setItemName("용량" + String.valueOf(capacity[0]) + "%");
-        Marker2.setItemName("용량" + String.valueOf(capacity[1]) + "%");
-        Marker3.setItemName("용량" + String.valueOf(capacity[2]) + "%");
-
-
-        Marker1.setTag(1);
-        Marker2.setTag(1);
-        Marker3.setTag(1);
-
-        Marker1.setMapPoint(MARKER_POINT[0]);
-        Marker2.setMapPoint(MARKER_POINT[1]);
-        Marker3.setMapPoint(MARKER_POINT[2]);
-
-
-        Marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-        Marker2.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-        Marker3.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-
-
-        Marker1.setCustomImageResourceId(R.drawable.custom_marker_black);
-        Marker2.setCustomImageResourceId(R.drawable.custom_marker_black);
-        Marker3.setCustomImageResourceId(R.drawable.custom_marker_black);
-
-        Marker1.setCustomImageAutoscale(true);
-        Marker2.setCustomImageAutoscale(true);
-        Marker3.setCustomImageAutoscale(true);
-
-        Marker1.setCustomImageAnchor(0.5f, 1.0f);
-        Marker2.setCustomImageAnchor(0.5f, 1.0f);
-        Marker3.setCustomImageAnchor(0.5f, 1.0f);
-
-        mapView.addPOIItem(Marker1);
-        mapView.addPOIItem(Marker2);
-        mapView.addPOIItem(Marker3);
-
-        mapView.selectPOIItem(Marker1, true);
-        mapView.selectPOIItem(Marker2, true);
-        mapView.selectPOIItem(Marker3, true);
-
-        //거리측정
-        //MapPoint.mapPointWithGeoCoord(la, lo);
-        lat1 = Marker1.getMapPoint().getMapPointGeoCoord().latitude;
-        log1 = Marker1.getMapPoint().getMapPointGeoCoord().longitude;
-        result1 = new StringBuffer("daummaps://route?sp=");
-        result1.append(la);
-        result1.append(",");
-        result1.append(lo);//시작점
-        result1.append("&ep=");
-        result1.append(lat1);
-        result1.append(",");
-        result1.append(log1);
-        result1.append("&by=CAR");
-        lat2 = Marker2.getMapPoint().getMapPointGeoCoord().latitude;
-        log2 = Marker2.getMapPoint().getMapPointGeoCoord().longitude;
-        result2 = new StringBuffer("daummaps://route?sp=");
-        result2.append(la);
-        result2.append(",");
-        result2.append(lo);//시작점
-        result2.append("&ep=");
-        result2.append(lat2);
-        result2.append(",");
-        result2.append(log2);
-        result2.append("&by=CAR");
-        lat3 = Marker3.getMapPoint().getMapPointGeoCoord().latitude;
-        log3 = Marker3.getMapPoint().getMapPointGeoCoord().longitude;
-        result3 = new StringBuffer("daummaps://route?sp=");
-        result3.append(la);
-        result3.append(",");
-        result3.append(lo);//시작점
-        result3.append("&ep=");
-        result3.append(lat3);
-        result3.append(",");
-        result3.append(log3);
-        result3.append("&by=CAR");
-/*
-        AlertDialog.Builder dialog1 = new AlertDialog.Builder(this);
-        dialog1.setItems(defaultMarker1.getCustomImageResourceId(), new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which) {
-                Uri uri = Uri.parse(result1.toString());
-                Intent intent = new Intent();
-                intent.setAction(intent.ACTION_VIEW);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-            });
-        dialog1.show();
-
-
-*/
-
+        }
 
     }
 
@@ -687,7 +597,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
             case R.id.action_settings: {
 
                 createDefaultMarker(mapView);
-                //mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
 
             }
