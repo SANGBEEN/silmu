@@ -54,7 +54,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
     MapPOIItem Marker1;
     MapPOIItem Marker2;
+
     MapPOIItem Marker3;
+    MapPOIItem[] Marker = new MapPOIItem[10];
+
     double la;
     double lo;
     double lat1;
@@ -116,10 +119,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         task = new phpDown();
         task2 = new phpDown();
         task3 = new phpDown();
-        task.execute("http://192.168.0.22//putdata.php");
+        task.execute("http://192.168.0.16//putdata.php");
         //doJSONParser();
-        task2.execute("http://192.168.0.22//putdata2.php");
-        task3.execute("http://192.168.0.22//putdata3.php");
+        task2.execute("http://192.168.0.16//putdata2.php");
+        task3.execute("http://192.168.0.16//putdata3.php");
 
 
         Noti.Notify(getApplication());
@@ -552,7 +555,15 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
        // mapView.setMapCenterPoint(DEFAULT_MARKER_POINT1, false);*/
 
 
+/*
+        for(int i=0;i<Marker.length;i++){
+            Marker[i] = new MapPOIItem();
+            Marker[i].setItemName("용량" + String.valueOf(capacity[i]) + "%");
+            Marker[i].setTag(1);
+            Marker[i].setMapPoint((MARKER_POINT[i]));
+            Marker[i].setMarkerType(MapPOIItem.MarkerType.CustomImage);
 
+        }*/
         Marker1 = new MapPOIItem();
         Marker2 = new MapPOIItem();
         Marker3 = new MapPOIItem();
