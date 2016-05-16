@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     double[] lo1 = new double[10];
 
     MapPOIItem[] Marker = new MapPOIItem[10];
+    String jSon;
 
     double la;
     double lo;
@@ -65,10 +66,6 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     StringBuffer result1;
     StringBuffer result2;
     StringBuffer result3;
-
-
-
-    String jSon;
 
 
     //NOTIFICATION설정
@@ -90,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     phpDown task5;
     phpDown task6;
     phpDown task7;
-   String cap[] = new  String[3];
 
 
     protected void onCreate(Bundle savedInstanceState) {
